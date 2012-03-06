@@ -1,0 +1,11 @@
+name: BlockAnimationPlugin
+main: de.sacaldur.bukkit.plugins.blockanimationplugin.BlockAnimationPlugin
+version: 0.1.0
+Description: Enables animations consiting of blocks.
+commands:
+    blan:
+        description: Manage your animations (start, stop, pause, create, ...).
+        usage: /blan help
+    blaned:
+        description: Edit your animations using different tools.
+        usage: /blaned help
