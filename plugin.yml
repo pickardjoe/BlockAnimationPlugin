@@ -1,5 +1,5 @@
 name: BlockAnimationPlugin
-main: de.sacaldur.bukkit.plugins.blockanimationplugin.BlockAnimationPlugin
+main: net.rhocraft.rhotek.plugins.blockanimationplugin.BlockAnimationPlugin
 version: 0.1.0
 Description: Enables animations consiting of blocks.
 commands:

@@ -1,19 +1,4 @@
-﻿/*
- * Copyright 2011 Sacaldur
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package net.rhocraft.rhotek.plugins.blockanimationplugin;
+﻿package net.rhocraft.rhotek.plugins.blockanimationplugin;
 
 import java.util.HashMap;
 
@@ -21,17 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.PluginManager;
 
-/**
- * Handle events for all Player related events
- * 
- * @author Sacaldur
- */
 public class BlockAnimationPlayerListener implements Listener {
 	private final BlockAnimationPlugin plugin;
 
@@ -42,77 +23,11 @@ public class BlockAnimationPlayerListener implements Listener {
 		pm.registerEvents(this, plugin);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		int handitemid = player.getItemInHand().getTypeId();
-		if (handitemid == Material.FEATHER.getId()) { // remove blocks using a
-														// feather - test
-			// TODO remove!
-			Block block = player.getTargetBlock(null, 300);
-			if (event.getAction() == Action.RIGHT_CLICK_AIR
-					|| event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-				if (block.getTypeId() == 7) {
-					block.setTypeId(35);
-					block.setData((byte) 2);
-				} else {
-					block.setTypeId(7);
-				}
-			} else if (event.getAction() == Action.LEFT_CLICK_AIR
-					|| event.getAction() == Action.LEFT_CLICK_BLOCK) {
-				block.setTypeId(0);
-			}
-		} else if (handitemid == Material.BOWL.getId()) { // copy&paste (per
-															// block) id and
-															// data
-			Block block = player.getTargetBlock(null, 300);
-			EditingInformations info = plugin.getWorld(player.getWorld())
-					.getEditingInformations(player);
-			if (info != null) {
-				if (event.getAction() == Action.RIGHT_CLICK_AIR
-						|| event.getAction() == Action.RIGHT_CLICK_BLOCK) { // copy
-					info.setId(block.getTypeId());
-					info.setData(block.getData());
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put("id", info.getId() + "." + info.getData());
-					plugin.sendMessage("edit.block.id_selected", map, player);
-				} else if (event.getAction() == Action.LEFT_CLICK_AIR
-						|| event.getAction() == Action.LEFT_CLICK_BLOCK) { // paste
-					Animation animation = info.getAnimation();
-					int timespan = info.getTimeSpan();
-					for (int i = 0; i < timespan; i++) {
-						animation.setBlockIdAt(block.getX(), block.getY(),
-								block.getZ(), info.getId(),
-								info.getData(), animation.getAnimationStep()
-										+ i);
-					}
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put("id", info.getId() + "." + info.getData());
-					plugin.sendMessage("edit.block.id_setted", map, player);
-				}
-			}
-		} else if (handitemid == Material.BOAT.getId()) { // copy&paste
-															// (filling) id and
-															// data
-			EditingInformations info = plugin.getWorld(player.getWorld())
-					.getEditingInformations(player);
-			if (info != null) {
-				Animation animation = info.getAnimation();
-				if (animation != null) {
-					if (event.getAction() == Action.LEFT_CLICK_AIR
-							|| event.getAction() == Action.LEFT_CLICK_BLOCK) {
-						info.setCopiedFrame(animation.getCurrentFrame());
-						plugin.sendMessage("edit.frame.copied", player); // TODO:
-																			// new
-						// Translation
-						// name
-					} else if (event.getAction() == Action.RIGHT_CLICK_AIR
-							|| event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-						plugin.sendMessage("unimplemented_feature", player);
-					}
-				}
-			}
-		} else if (handitemid == Material.MINECART.getId()) { // copy&paste
+		if (handitemid == Material.MINECART.getId()) { // copy&paste
 																// frames
 			plugin.sendMessage("unimplemented_feature", player);
 		} else if (handitemid == Material.WATCH.getId()) { // set time
@@ -177,7 +92,7 @@ public class BlockAnimationPlayerListener implements Listener {
 			}
 		}
 	}
-
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		String command = event.getMessage();
 		String[] arguments = command.split(" ");
@@ -276,7 +191,7 @@ public class BlockAnimationPlayerListener implements Listener {
 							|| arguments[1].equalsIgnoreCase("t")) {
 						blaned_settime(tmparguments, player);
 					} else if (arguments[1].equalsIgnoreCase("settimespan")
-							|| arguments[1].equalsIgnoreCase("ts")) {
+							|| arguments[1].equalsIgnoreCase("sts")) {
 						blaned_settimespan(tmparguments, player);
 					} else if (arguments[1].equalsIgnoreCase("map")
 							|| arguments[1].equalsIgnoreCase("m")) {
