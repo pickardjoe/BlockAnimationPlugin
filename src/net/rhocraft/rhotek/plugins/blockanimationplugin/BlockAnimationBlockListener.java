@@ -20,7 +20,7 @@ public class BlockAnimationBlockListener implements Listener {
 		pm.registerEvents(this, plugin);
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
 		EditingInformations info = plugin.getWorld(player.getWorld()).getEditingInformations(player);
@@ -38,7 +38,7 @@ public class BlockAnimationBlockListener implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 		EditingInformations info = plugin.getWorld(player.getWorld()).getEditingInformations(player);

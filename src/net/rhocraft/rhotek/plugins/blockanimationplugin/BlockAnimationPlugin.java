@@ -56,8 +56,7 @@ public class BlockAnimationPlugin extends JavaPlugin {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		translationplugin = null;
 		permissionhandler = null;
-		this.getServer()
-				.getLogger()
+		this.getServer().getLogger()
 				.info(pdfFile.getName() + " version " + pdfFile.getVersion()
 						+ " is disabled!");
 	}
