@@ -2,12 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="G:/HX/Minecraft/lib/bukkit.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://jd.bukkit.org/apidocs/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="G:/HX/Minecraft/lib/jdom.jar"/>
-	<classpathentry kind="lib" path="G:/HX/Minecraft/lib/Permissions.jar"/>
+	<classpathentry kind="lib" path="/home/enigma/hx/minecraft/lib/bukkit.jar"/>
+	<classpathentry kind="lib" path="/home/enigma/hx/minecraft/lib/jdom-1.1.2.jar"/>
+	<classpathentry kind="lib" path="/home/enigma/hx/minecraft/lib/Permissions.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

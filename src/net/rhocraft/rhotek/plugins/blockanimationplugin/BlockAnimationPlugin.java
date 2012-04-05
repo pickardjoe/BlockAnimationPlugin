@@ -10,9 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.rhocraft.rhotek.plugins.translationplugin.ITranslationPlugin;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-
 public class BlockAnimationPlugin extends JavaPlugin {
 	private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
 
@@ -22,14 +19,12 @@ public class BlockAnimationPlugin extends JavaPlugin {
 	private HashMap<org.bukkit.World, World> worlds = new HashMap<org.bukkit.World, World>();
 
 	private ITranslationPlugin translationplugin;
-	private PermissionHandler permissionhandler;
 
 	public BlockAnimationPlugin() {
 		super();
 	}
 
 	public void onEnable() {
-		setupPermissions();
 		PluginDescriptionFile pdfFile = this.getDescription();
 		new BlockAnimationBlockListener(this);
 		new BlockAnimationPlayerListener(this);
@@ -42,20 +37,10 @@ public class BlockAnimationPlugin extends JavaPlugin {
 		this.getServer().getLogger().info(this.name + " version " + this.version + " is enabled!");
 	}
 
-	private void setupPermissions() {
-		if (permissionhandler == null) {
-			Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
-			if (permissionsPlugin != null) {
-				permissionhandler = ((Permissions) permissionsPlugin).getHandler();
-			}
-		}
-	}
-
 	public void onDisable() {
 		// Animation.save(); TODO
 		PluginDescriptionFile pdfFile = this.getDescription();
 		translationplugin = null;
-		permissionhandler = null;
 		this.getServer().getLogger()
 				.info(pdfFile.getName() + " version " + pdfFile.getVersion()
 						+ " is disabled!");
@@ -154,10 +139,6 @@ public class BlockAnimationPlugin extends JavaPlugin {
 	}
 
 	public boolean hasPermission(Player player, String permission) {
-		if (permissionhandler != null) {
-			return permissionhandler.has(player, permission) || player.isOp();
-		} else {
-			return player.isOp();
-		}
+		return player.hasPermission(permission) || player.isOp();
 	}
 }
